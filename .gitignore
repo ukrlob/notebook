@@ -1,0 +1,28 @@
+# Временные файлы
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Локальные настройки
+.env
+config.local.js
+
+# Логи
+*.log
+logs/
+
+# IDE файлы
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (если будет использоваться)
+node_modules/
+npm-debug.log*
+
+# Backup файлы
+*.bak
+*.backup
+

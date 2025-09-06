@@ -1,0 +1,90 @@
+КОД ДЛЯ GOOGLE APPS SCRIPT:
+
+1. Откройте https://script.google.com
+2. Нажмите "Новый проект"
+3. Вставьте этот код:
+
+function doPost(e) {
+  try {
+    console.log('Получен POST запрос');
+    console.log('Данные:', e.postData.contents);
+    
+    const data = JSON.parse(e.postData.contents);
+    console.log('Распарсенные данные:', data);
+    
+    const spreadsheetId = '1z5Ls-vyGt45JBCf_8_MLd-bjs5OuTEKKZ8SZyG9qpjo';
+    console.log('Открываем таблицу с ID:', spreadsheetId);
+    
+    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+    const sheet = spreadsheet.getActiveSheet();
+    console.log('Лист открыт:', sheet.getName());
+    
+    // Добавляем заголовки, если лист пустой
+    if (sheet.getLastRow() === 0) {
+      console.log('Добавляем заголовки');
+      sheet.getRange(1, 1, 1, 4).setValues([['Тип', 'Текст', 'Дата', 'Статус']]);
+    }
+    
+    // Получаем существующие данные для проверки дубликатов
+    const existingData = sheet.getDataRange().getValues();
+    console.log('Существующие данные:', existingData.length, 'строк');
+    
+    // Фильтруем новые данные, исключая дубликаты
+    const newData = [];
+    data.forEach((row, index) => {
+      const isDuplicate = existingData.some(existingRow => {
+        // Сравниваем по тексту и дате (первые 3 элемента)
+        return existingRow[1] === row[1] && existingRow[2] === row[2];
+      });
+      
+      if (!isDuplicate) {
+        console.log('Добавляем новую строку:', row);
+        newData.push(row);
+      } else {
+        console.log('Пропускаем дубликат:', row);
+      }
+    });
+    
+    // Добавляем только новые данные
+    if (newData.length > 0) {
+      const lastRow = sheet.getLastRow() + 1;
+      console.log('Добавляем', newData.length, 'новых записей начиная со строки:', lastRow);
+      newData.forEach((row, index) => {
+        sheet.getRange(lastRow + index, 1, 1, 4).setValues([row]);
+      });
+    } else {
+      console.log('Все записи уже существуют, дубликаты не добавлены');
+    }
+    
+    console.log('Обработка завершена');
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true, 
+      added: newData.length, 
+      skipped: data.length - newData.length
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    console.error('Ошибка:', error);
+    return ContentService.createTextOutput(JSON.stringify({error: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Функция для тестирования - ВАЖНО!
+function doGet() {
+  return ContentService.createTextOutput('Скрипт работает! Используйте POST запрос для добавления данных.');
+}
+
+// Функция для CORS preflight запросов
+function doOptions(e) {
+  return ContentService.createTextOutput('').setMimeType(ContentService.MimeType.TEXT);
+}
+
+4. Сохраните (Ctrl+S)
+5. Нажмите "Развернуть" → "Новый развертывание"
+6. Выберите "Веб-приложение"
+7. Доступ: "Доступно для всех" ⚠️ ВАЖНО!
+8. Нажмите "Развернуть"
+9. Скопируйте URL веб-приложения
+
+⚠️ ВАЖНО: Доступ ДОЛЖЕН быть "Доступно для всех"!

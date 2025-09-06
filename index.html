@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Мысли - Быстрая запись идей</title>
+    <meta name="description" content="Быстрая запись мыслей, идей, задач и покупок с голосовым вводом">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💭</text></svg>">
+    <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+    <div class="app">
+        <!-- Кнопки управления (заменяют заголовок) -->
+        <div class="control-buttons">
+            <h1 class="app-title">Мои Мысли</h1>
+            <div class="buttons-group">
+                <button id="exportData" class="export-btn">Экспорт в Google Sheets</button>
+                <button id="clearBtn" class="clear-btn">Очистить все</button>
+            </div>
+        </div>
+
+        <!-- Форма добавления -->
+        <div class="input-section">
+            <div class="input-container">
+                <textarea 
+                    id="thoughtText" 
+                    placeholder="Напишите или скажите вашу мысль, идею, задачу или покупку...&#10;Enter = добавить, Shift+Enter = новая строка"
+                    rows="3"
+                ></textarea>
+                
+                <div class="input-controls">
+                    <button id="recordVoice" class="voice-btn" title="Голосовой ввод">
+                        Голос
+                    </button>
+                    <button id="addThought" class="add-btn">Добавить</button>
+                </div>
+            </div>
+            
+            <div class="voice-status" id="voiceStatus"></div>
+        </div>
+
+        <!-- Фильтры -->
+        <div class="filters">
+            <button id="filterAll" class="filter-btn active" data-filter="all">Все</button>
+            <button id="filterTasks" class="filter-btn" data-filter="task">Задачи</button>
+            <button id="filterPurchases" class="filter-btn" data-filter="purchase">Покупки</button>
+            <button id="filterIdeas" class="filter-btn" data-filter="idea">Идеи</button>
+            <button id="filterThoughts" class="filter-btn" data-filter="thought">Мысли</button>
+        </div>
+
+
+        <!-- Список записей -->
+        <div class="thoughts-list" id="thoughtsList">
+            <!-- Записи будут добавляться динамически -->
+        </div>
+
+    </div>
+
+    <!-- Модальное окно для редактирования -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Редактировать запись</h3>
+            <textarea id="editInput" rows="4"></textarea>
+            <div class="modal-controls">
+                <button id="saveEditBtn">Сохранить</button>
+                <button id="cancelEditBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=2"></script>
+    
+    <!-- Регистрация Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

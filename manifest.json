@@ -1,0 +1,41 @@
+{
+    "name": "Мои Мысли - Быстрая запись идей",
+    "short_name": "Мои Мысли",
+    "description": "Быстрая запись мыслей, идей, задач и покупок с голосовым вводом",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "orientation": "portrait-primary",
+    "scope": "./",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23007bff' rx='32'/><text x='96' y='120' font-family='Arial' font-size='80' text-anchor='middle' fill='white'>💭</text></svg>",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23007bff' rx='32'/><text x='96' y='120' font-family='Arial' font-size='80' text-anchor='middle' fill='white'>💭</text></svg>",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        },
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23007bff' rx='64'/><text x='256' y='320' font-family='Arial' font-size='200' text-anchor='middle' fill='white'>💭</text></svg>",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23007bff' rx='64'/><text x='256' y='320' font-family='Arial' font-size='200' text-anchor='middle' fill='white'>💭</text></svg>",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        }
+    ],
+    "categories": ["productivity", "utilities"],
+    "lang": "ru",
+    "dir": "ltr"
+}
+
