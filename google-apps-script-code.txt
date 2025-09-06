@@ -33,15 +33,15 @@ function doPost(e) {
     const newData = [];
     data.forEach((row, index) => {
       const isDuplicate = existingData.some(existingRow => {
-        // Сравниваем по тексту и дате (первые 3 элемента)
-        return existingRow[1] === row[1] && existingRow[2] === row[2];
+        // Сравниваем только по тексту (второй элемент) - игнорируем время
+        return existingRow[1] === row[1];
       });
       
       if (!isDuplicate) {
         console.log('Добавляем новую строку:', row);
         newData.push(row);
       } else {
-        console.log('Пропускаем дубликат:', row);
+        console.log('Пропускаем дубликат по тексту:', row[1]);
       }
     });
     
