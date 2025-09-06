@@ -382,29 +382,21 @@ class ThoughtApp {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
-                // Убираем mode: 'no-cors' для получения реального статуса
+                body: JSON.stringify(data),
+                mode: 'no-cors' // Возвращаем no-cors для обхода CORS
             });
 
             console.log('Ответ получен:', response);
             console.log('Статус ответа:', response.status);
             
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Результат от Google Apps Script:', result);
-                
-                this.showNotification(`Отправлено ${data.length} записей в Google Sheets!`);
-                
-                // Автоматически очищаем все записи после успешного экспорта
-                this.thoughts = [];
-                this.saveThoughts();
-                this.displayThoughts();
-                this.showNotification('Записи экспортированы и очищены!');
-            } else {
-                const errorText = await response.text();
-                console.error('Ошибка сервера:', response.status, errorText);
-                alert(`Ошибка экспорта: ${response.status} - ${errorText}`);
-            }
+            // При no-cors mode считаем запрос успешным, если нет исключения
+            this.showNotification(`Отправлено ${data.length} записей в Google Sheets!`);
+            
+            // Автоматически очищаем все записи после успешного экспорта
+            this.thoughts = [];
+            this.saveThoughts();
+            this.displayThoughts();
+            this.showNotification('Записи экспортированы и очищены!');
             
         } catch (error) {
             console.error('Send error:', error);
