@@ -375,6 +375,7 @@ class ThoughtApp {
 
             console.log('Отправляем данные в Google Sheets:', data);
             console.log('URL:', webAppUrl);
+            console.log('Количество записей:', data.length);
 
             const response = await fetch(webAppUrl, {
                 method: 'POST',
@@ -386,9 +387,10 @@ class ThoughtApp {
             });
 
             console.log('Ответ получен:', response);
+            console.log('Статус ответа:', response.status);
             
             // Поскольку no-cors не возвращает response.ok, считаем успешным
-            this.showNotification('Данные успешно отправлены в Google Sheets!');
+            this.showNotification(`Отправлено ${data.length} записей в Google Sheets!`);
             
             // Автоматически очищаем все записи после успешного экспорта
             this.thoughts = [];
@@ -398,6 +400,7 @@ class ThoughtApp {
             
         } catch (error) {
             console.error('Send error:', error);
+            console.error('Error details:', error.message);
             alert('Ошибка отправки: ' + error.message);
         }
     }
