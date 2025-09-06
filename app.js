@@ -390,13 +390,14 @@ class ThoughtApp {
             console.log('Статус ответа:', response.status);
             
             // При no-cors mode считаем запрос успешным, если нет исключения
-            this.showNotification(`Отправлено ${data.length} записей в Google Sheets!`);
+            // Данные отправлены, даже если status = 0
+            console.log('✅ Данные успешно отправлены в Google Sheets!');
             
             // Автоматически очищаем все записи после успешного экспорта
             this.thoughts = [];
             this.saveThoughts();
             this.displayThoughts();
-            this.showNotification('Записи экспортированы и очищены!');
+            this.showNotification('✅ Записи экспортированы и очищены!');
             
         } catch (error) {
             console.error('Send error:', error);
